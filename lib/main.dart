@@ -7,6 +7,7 @@ import 'package:english_words/english_words.dart';
 
 void main() => runApp(MyApp());
 
+// StatelessWidget 바꿀 수 없는 위젯
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -14,11 +15,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Welcome to Flutter',
+      theme: ThemeData(
+        // Add the 5 lines from here...
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 109, 15, 218),
+          foregroundColor: Color.fromARGB(255, 114, 216, 19),
+        ),
+      ),
       home: RandomWords(),
     );
   }
 }
 
+// StatefulWidget 바꿀 수 있는 위젯
 class RandomWords extends StatefulWidget {
   @override
   RandomWordsState createState() => RandomWordsState();
@@ -69,16 +78,29 @@ class RandomWordsState extends State<RandomWords> {
     return Scaffold(
       // NEW from here ...
       appBar: AppBar(
-        title: const Text('Startup Name Generator'),
         actions: [
+          // 하트 누른 곳으로 이동
           IconButton(
-            icon: const Icon(Icons.list),
+            icon: const Icon(Icons.menu),
             onPressed: _pushSaved,
             tooltip: 'Saved Suggestions',
           ),
         ],
+        title: const Text('Startup Name Generator'),
+        // 찾기 아이콘 기능
+        leading: const IconButton(
+          icon: Icon(Icons.search),
+          tooltip: 'Search',
+          onPressed: null,
+        ),
       ),
       body: _buildSuggestions(),
+      // 바텀 add 기능 표시
+      floatingActionButton: const FloatingActionButton(
+        tooltip: 'Add', // used by assistive technologies
+        onPressed: null,
+        child: Icon(Icons.add),
+      ),
     );
   }
 
